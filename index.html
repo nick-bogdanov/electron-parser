@@ -38,7 +38,8 @@
               <tr ng-repeat='data in renderedData'>
                 <td><a href="https://www.f.ua">f.ua</a></td>
                 <td ng-bind='data.category'></td>
-                <td ng-bind='data.item.'></td>
+                <td ng-bind='data.price'></td>
+                <td><a ng-href="{{data.title.href}}" ng-bind='data.title.name'></a></td>
               </tr>
             </tbody>
           </table>
