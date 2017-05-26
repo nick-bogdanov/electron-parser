@@ -88,7 +88,7 @@ class Parser {
                     }, url.name)
                     .then((result) => {
                         console.log(result);
-                        this.items = result
+                        this.items.push(result)
 
                     }).catch((err) => {
                         console.log('err: ', err);
