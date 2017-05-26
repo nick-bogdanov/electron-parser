@@ -2,8 +2,7 @@ let Nightmare = require('nightmare')
 let vo = require('vo')
 let fs = require('fs-extra')
 let nightmare = Nightmare({
-    electronPath: require('../../node_modules/electron'),
-    show: true,
+    electronPath: require('../../node_modules/electron')
 })
 
 class Parser {
