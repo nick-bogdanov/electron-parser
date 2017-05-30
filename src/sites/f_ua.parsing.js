@@ -5,6 +5,7 @@ let nightmare = Nightmare({
     electronPath: require('../../node_modules/electron')
 })
 let json2xls = require('json2xls');
+let _ = require('lodash');
 
 class Parser {
     constructor(ipc, app) {
@@ -39,7 +40,15 @@ class Parser {
         this.ipc.on('export-to-excel', (event, arg) => {
             this.returnJsonData().then((jsonFile) => {
                 const file = this.filesDir + 'f_ua.xlsx'
-                const xls = json2xls(jsonFile)
+                const jsonData = _.flatten(jsonFile)
+
+                jsonData.forEach((elem) => {
+                    let title = elem.title.name
+                    delete elem.title
+                    elem.title = title
+                })
+
+                const xls = json2xls(_.flatten(jsonData))
                 fs.writeFileSync(file, xls, 'binary')
                 console.log('jsonFile: ', jsonFile);
             })
