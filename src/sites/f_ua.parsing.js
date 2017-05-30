@@ -1,17 +1,22 @@
 let Nightmare = require('nightmare')
 let vo = require('vo')
 let fs = require('fs-extra')
-let json2xls = require('json2xls');
-let _ = require('lodash');
+let json2xls = require('json2xls')
+let _ = require('lodash')
+let electron = require('electron')
+let dialog = electron.dialog
+const BrowserWindow = electron.BrowserWindow;
+
 
 class Parser {
-    constructor(ipc, app) {
+    constructor(ipc, app, createWindow) {
         this.ipc = ipc
         this.app = app
         this.link = 'https://f.ua/shop/dlya-avtomobilya/'
         this.items = []
         this.filesDir = `${this.app.getPath('appData')}/scrabber/`;
         this.event = null;
+        this.createWindow = createWindow
         this.init()
     }
 
@@ -35,8 +40,23 @@ class Parser {
         })
 
         this.ipc.on('export-to-excel', (event, arg) => {
+            let mainWindow = new BrowserWindow();
+            const file = `${this.app.getPath('documents')}/f_ua.xlsx`
+
+            const saveFile =  content => {
+                var fileName = dialog.showSaveDialog(mainWindow, {
+                    title: 'Save to Excel',
+                    defaultPath: file
+                });
+
+                if (!fileName) {
+                    return;
+                }
+
+                fs.writeFileSync(fileName, content);
+            };
+
             this.returnJsonData().then((jsonFile) => {
-                const file = this.filesDir + 'f_ua.xlsx'
                 const jsonData = _.flatten(jsonFile)
 
                 jsonData.forEach((elem) => {
@@ -46,7 +66,8 @@ class Parser {
                 })
 
                 const xls = json2xls(_.flatten(jsonData))
-                fs.writeFileSync(file, xls, 'binary')
+                saveFile(xls)
+                this.createWindow()
             })
         })
 
