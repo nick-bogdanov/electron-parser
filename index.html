@@ -22,8 +22,8 @@
         <h1 class="title">Товаров: <span ng-bind='renderedData.length || streamData.length'></span></h1>
 
         <div ng-if='renderedData' class="toolbar-actions">
-          <button class="btn btn-xs btn-default">
-                <span class="icon icon-home icon-text"></span>
+          <button ng-click='exportToExcel()' class="btn btn-xs btn-default">
+              <span class="icon icon-home icon-text"></span>
                 Експорт в Excel
               </button>
         </div>
@@ -83,7 +83,7 @@
               <tr ng-repeat='data in renderedData || streamData track by $index'>
                 <td><a>f.ua</a></td>
                 <td ng-bind='data.category'></td>
-                <td ng-bind='data.price'></td>
+                <td ng-bind='data.price || "Нет в наличии"'></td>
                 <td><a href='javascript:void(0)' ng-click='openLink(data.title.href)' ng-bind='data.title.name'></a></td>
               </tr>
             </tbody>

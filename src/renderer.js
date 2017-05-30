@@ -5,8 +5,6 @@ const _ = require('lodash')
 const F_UA = require('./sites/f_ua')
 const shell = require('electron').shell
 
-
-
 angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
     let parse_f_ua = new F_UA('f-ua')
 
@@ -41,6 +39,10 @@ angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
     $scope.parse = function () {
         $scope.sites[0].parsed = 'loading';
         return parse_f_ua.$releaseTheBeast()
+    }
+
+    $scope.exportToExcel = function() {
+        parse_f_ua.export();
     }
 
 });

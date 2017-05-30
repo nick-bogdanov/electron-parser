@@ -14,6 +14,10 @@ class F_UA {
         ipc.on('f-ua-results', this.onUpdateData)
         ipc.on('single-product', this.onSingleDataUpdated)
     }
+
+    export() {
+         ipc.send('export-to-excel', {})
+    }
 }
 
 
