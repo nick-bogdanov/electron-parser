@@ -22,14 +22,14 @@ class Parser {
         this.ipc.on('start-parse-f-ua', (event, arg) => {
             this.event = event.sender;
             this.returnJsonData().then((data) => {
-                // console.log('using locally data', data)
+                console.log('using locally data', data)
                 event.sender.send('f-ua-results', data)
             }).catch(err => {
                 console.log('err: ', err);
                 if (err.action) {
                     console.log('Starting parsing');
                     this.goThroughtCateogories().then(() => {
-                        // console.log('parsing has been ended')
+                        console.log('parsing has been ended')
                         event.sender.send('f-ua-results', this.items)
                     }).catch(console.error)
                 }
@@ -50,7 +50,6 @@ class Parser {
 
                 const xls = json2xls(_.flatten(jsonData))
                 fs.writeFileSync(file, xls, 'binary')
-                console.log('jsonFile: ', jsonFile);
             })
         })
 
@@ -72,8 +71,6 @@ class Parser {
     }
 
     getCategoriesData(urls) {
-
-        console.log('urls: ', urls);
 
         return urls.reduce((accumulator, url) => {
             return accumulator.then((results) => {
