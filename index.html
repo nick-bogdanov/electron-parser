@@ -17,8 +17,8 @@
         <div class="pane-sm sidebar">
           <nav class="nav-group">
             <h5 class="nav-group-title">Сайты для парсинга</h5>
-            <a ng-click='loading = true' id='f-ua' class="nav-group-item">
-              <span class="icon icon-home"></span>
+            <a ng-click='loading = true; parseF_UA()' id='f-ua' class="nav-group-item">
+              <span class="icon icon-record" style="color:#34c84a"></span>
               f.ua -> для авто
             </a>
           </nav>
@@ -35,11 +35,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat='data in renderedData'>
-                <td><a href="https://www.f.ua">f.ua</a></td>
+              <tr ng-repeat='data in renderedData track by $index'>
+                <td><a>f.ua</a></td>
                 <td ng-bind='data.category'></td>
                 <td ng-bind='data.price'></td>
-                <td><a ng-href="{{data.title.href}}" ng-bind='data.title.name'></a></td>
+                <td><a href='javascript:void(0)' ng-click='openLink(data.title.href)' ng-bind='data.title.name'></a></td>
               </tr>
             </tbody>
           </table>

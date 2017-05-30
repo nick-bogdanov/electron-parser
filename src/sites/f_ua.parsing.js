@@ -18,24 +18,25 @@ class Parser {
     init() {
         this.ipc.on('start-parse-f-ua', (event, arg) => {
             this.returnJsonData().then((data) => {
-                console.log('using locally data', data);
+                console.log('using locally data', data)
                 event.sender.send('f-ua-results', data)
             }).catch(err => {
                 console.log('err: ', err);
                 if (err.action) {
                     console.log('Starting parsing');
                     this.goThroughtCateogories().then(() => {
-                        console.log('parsing has been ended');
+                        console.log('parsing has been ended')
                         event.sender.send('f-ua-results', this.items)
                     }).catch(console.error)
                 }
             })
 
         })
+
     }
 
     goThroughtCateogories() {
-        return this.getCategoriesLinks().then(this.getCategoriesData.bind(this));
+        return this.getCategoriesLinks().then(this.getCategoriesData.bind(this))
     }
 
     returnJsonData() {
@@ -50,6 +51,8 @@ class Parser {
     }
 
     getCategoriesData(urls) {
+
+        console.log('urls: ', urls);
 
         return urls.reduce((accumulator, url) => {
             return accumulator.then((results) => {
