@@ -134,7 +134,7 @@ class Parser {
     saveCategoryLinks(data) {
         fs.writeJson(this.filesDir + 'categories.json', data, err => {
             if (err) throw err
-            console.log('Files has been written to ' + this.filesDir)
+            console.log('Category Files has been written to ' + this.filesDir)
         })
     }
 
