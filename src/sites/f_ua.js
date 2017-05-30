@@ -2,13 +2,8 @@ const ipc = require('electron').ipcRenderer
 
 class F_UA {
     constructor(idOfHTMLElement) {
-        this.link = idOfHTMLElement
         this.onUpdateData = null
-        this.init()
-    }
-
-    init() {
-        document.getElementById(this.link).addEventListener('click', this.$releaseTheBeast.bind(this))
+        this.onSingleDataUpdated = null
     }
 
     $releaseTheBeast() {
@@ -17,6 +12,7 @@ class F_UA {
         ipc.send('start-parse-f-ua', {})
 
         ipc.on('f-ua-results', this.onUpdateData)
+        ipc.on('single-product', this.onSingleDataUpdated)
     }
 }
 

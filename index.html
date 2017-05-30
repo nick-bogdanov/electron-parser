@@ -6,26 +6,71 @@
   <title>Web scrapper</title>
 </head>
 <link rel='stylesheet' href='./assets/styles/photon.min.css'></link>
+<link rel='stylesheet' href='./assets/styles/scrab.css'></link>
+<link rel='stylesheet' href='./node_modules/bootstrap/dist/css/bootstrap.min.css'></link>
 <script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="./node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 
 <body>
 
   <div class="window" ng-controller="render as vm">
 
     <div class="window-content">
+
+      <header ng-if='renderedData || streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
+
+        <h1 class="title">Товаров: <span ng-bind='renderedData.length || streamData.length'></span></h1>
+
+        <div ng-if='renderedData' class="toolbar-actions">
+          <button class="btn btn-xs btn-default">
+                <span class="icon icon-home icon-text"></span>
+                Експорт в Excel
+              </button>
+        </div>
+
+      </header>
+
+      <header ng-if='!renderedData && !streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
+
+        <h1 class="title">Выберите сайт для парсинга</h1>
+
+        <div class="toolbar-actions">
+
+        </div>
+
+      </header>
+
       <div class="pane-group">
-        <div class="pane-sm sidebar">
+        <div class="content-margin-top pane-sm sidebar">
           <nav class="nav-group">
             <h5 class="nav-group-title">Сайты для парсинга</h5>
-            <a ng-click='loading = true; parseF_UA()' id='f-ua' class="nav-group-item">
-              <span class="icon icon-record" style="color:#34c84a"></span>
-              f.ua -> для авто
-            </a>
+            <div ng-repeat='site in sites'>
+
+              <div tooltip-placement="right" uib-tooltip="Загрузка" ng-if='site.parsed === "loading"' class="sk-circle">
+                <div class="sk-circle1 sk-child"></div>
+                <div class="sk-circle2 sk-child"></div>
+                <div class="sk-circle3 sk-child"></div>
+                <div class="sk-circle4 sk-child"></div>
+                <div class="sk-circle5 sk-child"></div>
+                <div class="sk-circle6 sk-child"></div>
+                <div class="sk-circle7 sk-child"></div>
+                <div class="sk-circle8 sk-child"></div>
+                <div class="sk-circle9 sk-child"></div>
+                <div class="sk-circle10 sk-child"></div>
+                <div class="sk-circle11 sk-child"></div>
+                <div class="sk-circle12 sk-child"></div>
+              </div>
+
+              <a ng-click='loading = true;parse(site.name)' class="nav-group-item">
+                <span tooltip-placement="right" uib-tooltip="Данные отпаршены" ng-if='site.parsed === true' class="icon icon-record" style="color:#34c84a"></span>
+                <span ng-bind='site.label'></span>
+              </a>
+
+            </div>
           </nav>
         </div>
-        <div class="pane" >
-          <h3 class="text-center" ng-if='!renderedData && !loading'>Выберите сайт для парсинга</h3>
-          <table ng-if='renderedData' class="table-striped">
+        <div class="content-margin-top pane">
+          <table ng-if='renderedData || streamData.length' class="table-striped">
             <thead>
               <tr>
                 <th>Сайт</th>
@@ -35,7 +80,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat='data in renderedData track by $index'>
+              <tr ng-repeat='data in renderedData || streamData track by $index'>
                 <td><a>f.ua</a></td>
                 <td ng-bind='data.category'></td>
                 <td ng-bind='data.price'></td>

@@ -12,13 +12,15 @@ class Parser {
         this.link = 'https://f.ua/shop/dlya-avtomobilya/'
         this.items = []
         this.filesDir = `${this.app.getPath('appData')}/scrabber/`;
+        this.event = null;
         this.init()
     }
 
     init() {
         this.ipc.on('start-parse-f-ua', (event, arg) => {
+            this.event = event.sender;
             this.returnJsonData().then((data) => {
-                console.log('using locally data', data)
+                // console.log('using locally data', data)
                 event.sender.send('f-ua-results', data)
             }).catch(err => {
                 console.log('err: ', err);
@@ -71,13 +73,19 @@ class Parser {
 
                             let prices = item.querySelectorAll('.price div')
 
-                            prices.forEach((price) => {
-                                if (getComputedStyle(price).getPropertyValue('display') === 'block') {
-                                    let elem = price.querySelector('span').firstChild.nodeValue
-                                    let value = price.querySelector('span span').innerHTML.replace('&nbsp;', '')
-                                    priceInfo = elem + ' ' + value
-                                }
-                            })
+                            if (prices.length) {
+                                prices.forEach((price) => {
+                                    if (getComputedStyle(price).getPropertyValue('display') === 'block') {
+                                        let elem = price.querySelector('span').firstChild.nodeValue
+                                        let value = price.querySelector('span span').innerHTML.replace('&nbsp;', '')
+                                        priceInfo = elem + ' ' + value
+                                    }
+                                })
+                            } 
+
+                            if (item.querySelector('.price_block_container.no_product')) {
+                                priceInfo = 'Нет в наличии'
+                            }
 
                             elementInfo.push({
                                 title: titleInfo,
@@ -90,11 +98,11 @@ class Parser {
                         return elementInfo
                     }, url.name)
                     .then((result) => {
-                        console.log(result);
+                        console.log('single result', result)
+                        this.event.send('single-product', result)
                         this.items.push(result)
-
                     }).catch((err) => {
-                        console.log('err: ', err);
+                        console.log('error while parsing product: ', err);
                     });
             });
         }, Promise.resolve([])).then(this.writeResult.bind(this)).catch(console.log)
