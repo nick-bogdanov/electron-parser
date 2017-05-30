@@ -1,9 +1,6 @@
 let Nightmare = require('nightmare')
 let vo = require('vo')
 let fs = require('fs-extra')
-let nightmare = Nightmare({
-    electronPath: require('../../node_modules/electron')
-})
 let json2xls = require('json2xls');
 let _ = require('lodash');
 
@@ -67,10 +64,15 @@ class Parser {
             return fs.readFile(file, 'utf-8').then(file => JSON.parse(file)).catch(console.error)
         }
 
-        return Promise.reject({ action: true })
+        return Promise.reject({
+            action: true
+        })
     }
 
     getCategoriesData(urls) {
+        let nightmare = Nightmare({
+            electronPath: require('../../node_modules/electron')
+        })
 
         return urls.reduce((accumulator, url) => {
             return accumulator.then((results) => {
@@ -81,7 +83,10 @@ class Parser {
                         let container = document.querySelectorAll('.wrapper .container')
 
                         container.forEach((item) => {
-                            let titleInfo = { name: null, href: null };
+                            let titleInfo = {
+                                name: null,
+                                href: null
+                            };
                             let priceInfo = null;
 
                             titleInfo.name = item.querySelector('.title a').innerHTML
@@ -97,7 +102,7 @@ class Parser {
                                         priceInfo = elem + ' ' + value
                                     }
                                 })
-                            } 
+                            }
 
                             if (item.querySelector('.price_block_container.no_product')) {
                                 priceInfo = 'Нет в наличии'
@@ -140,6 +145,9 @@ class Parser {
 
     getCategoriesLinks() {
         const file = this.filesDir + 'categories.json';
+        let nightmare = Nightmare({
+            electronPath: require('../../node_modules/electron')
+        })
 
         if (fs.existsSync(file)) {
             console.log('Using lcoally categories json file instead of parsing');
