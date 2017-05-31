@@ -19,12 +19,14 @@ angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
         $scope.renderedData = _.flatten(args);
         $scope.sites[0].parsed = true;
         $scope.loading = false
+        priceToInt($scope.renderedData)
         $scope.$apply();
     }
 
     parse_f_ua.onSingleDataUpdated = (data, args) => {
         $scope.streamData.push(args);
         $scope.streamData = _.flatten($scope.streamData)
+        priceToInt($scope.streamData)
         $scope.loading = true
         $scope.$apply();
     }
@@ -40,6 +42,12 @@ angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
 
     $scope.exportToExcel = function() {
         parse_f_ua.export();
+    }
+
+    function priceToInt(data) {
+        angular.forEach(data, element => {
+            element.priceNumber = parseInt(element.priceNumber);
+        });
     }
 
 });

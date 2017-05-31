@@ -106,33 +106,39 @@ class Parser {
                         let container = document.querySelectorAll('.wrapper .container')
 
                         container.forEach((item) => {
-                            let titleInfo = {
-                                name: null,
-                                href: null
-                            };
-                            let priceInfo = null;
+                            let name = null
+                            let href = null
+                            let priceInfo = null
+                            let priceNumber = null
 
-                            titleInfo.name = item.querySelector('.title a').innerHTML
-                            titleInfo.href = item.querySelector('.title a').href
+                            name = item.querySelector('.title a').innerHTML
+                            href = item.querySelector('.title a').href
 
                             let prices = item.querySelectorAll('.price div')
 
                             if (prices.length) {
                                 prices.forEach((price) => {
                                     if (getComputedStyle(price).getPropertyValue('display') === 'block') {
-                                        let elem = price.querySelector('span').firstChild.nodeValue
+                                        priceNumber = price.querySelector('span').firstChild.nodeValue
+                                        priceNumber = priceNumber.replace(/\s/, '')
                                         let value = price.querySelector('span span').innerHTML.replace('&nbsp;', '')
-                                        priceInfo = elem + ' ' + value
+                                        priceInfo = priceNumber + ' ' + value
                                     }
                                 })
                             }
 
-                            if (item.querySelector('.price_block_container.no_product')) {
+                            if (item.querySelector('.sticker.saled')) {
                                 priceInfo = 'Нет в наличии'
                             }
 
+                            if (!priceInfo) {
+                                priceInfo = 'Цена не найдена'
+                            }
+
                             elementInfo.push({
-                                title: titleInfo,
+                                name,
+                                href,
+                                priceNumber,
                                 price: priceInfo,
                                 category
                             })
