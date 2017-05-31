@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "compile": "electron-packager ./ Scrubber --all --out ./Scrubber --overwrite"
+    "compile-win": "electron-packager ./ Scrubber --platform=win32 --arch=x64 --out ./Scrubber --overwrite",
+    "compile-mac": "electron-packager ./ Scrubber --platform=darwin --arch=x64 --out ./Scrubber --overwrite"
   },
   "repository": "https://github.com/nick-bogdanov/electron-parser",
   "keywords": [

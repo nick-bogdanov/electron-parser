@@ -1,5 +1,4 @@
 let Nightmare = require('nightmare')
-let vo = require('vo')
 let fs = require('fs-extra')
 let json2xls = require('json2xls')
 let _ = require('lodash')
