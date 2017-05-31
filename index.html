@@ -97,7 +97,7 @@
               <tr ng-repeat='data in renderedData || streamData | orderBy:orderByField:reverseSort track by $index'>
                 <td><a>f.ua</a></td>
                 <td ng-bind='data.category'></td>
-                <td ng-bind='data.price || "Нет в наличии"'></td>
+                <td ng-bind='data.price || "Цена не найдена"'></td>
                 <td><a href='javascript:void(0)' ng-click='openLink(data.href)' ng-bind='data.name'></a></td>
               </tr>
             </tbody>
