@@ -106,7 +106,7 @@ class Parser {
 
     getCategoriesData(urls) {
         let nightmare = Nightmare({
-            electronPath: require('../../node_modules/electron')
+            electronPath: require('../../electron')
         })
 
         return urls.reduce((accumulator, url) => {
@@ -187,7 +187,7 @@ class Parser {
     getCategoriesLinks() {
         const file = this.filesDir + 'categories.json';
         let nightmare = Nightmare({
-            electronPath: require('../../node_modules/electron')
+            electronPath: require('../../electron')
         })
 
         if (fs.existsSync(file)) {
