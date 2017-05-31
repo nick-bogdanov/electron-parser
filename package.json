@@ -16,7 +16,7 @@
     "web scrub"
   ],
   "author": "nickolas.bog@gmail.com",
-  "devDependencies": {
+  "dependencies": {
     "angular": "^1.6.4",
     "angular-ui-bootstrap": "^2.5.0",
     "bootstrap": "^3.3.7",
@@ -25,9 +25,6 @@
     "fs-extra": "^3.0.1",
     "json2xls": "^0.1.2",
     "lodash": "^4.17.4",
-    "vo": "^4.0.2"
-  },
-  "dependencies": {
     "nightmare": "^2.10.0"
   }
 }
