@@ -7,7 +7,10 @@
   "scripts": {
     "start": "electron main.js",
     "compile-win": "electron-packager ./ Scrubber --platform=win32 --arch=x64 --out ./Scrubber --overwrite",
-    "compile-mac": "electron-packager ./ Scrubber --platform=darwin --arch=x64 --out ./Scrubber --overwrite"
+    "compile-mac": "electron-packager ./ Scrubber --platform=darwin --arch=x64 --out ./Scrubber --overwrite",
+    "pack": "build --dir",
+    "dist": "build",
+    "postinstall": "install-app-deps"
   },
   "repository": "https://github.com/nick-bogdanov/electron-parser",
   "keywords": [
@@ -16,16 +19,36 @@
     "scrubber",
     "web scrub"
   ],
+  "build": {
+    "appId": "Scrubber",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  },
   "author": "nickolas.bog@gmail.com",
   "dependencies": {
     "angular": "^1.6.4",
     "angular-ui-bootstrap": "^2.5.0",
     "bootstrap": "^3.3.7",
-    "electron": "~1.6.2",
-    "electron-packager": "^8.7.0",
+    "electron-log": "^2.2.6",
     "fs-extra": "^3.0.1",
     "json2xls": "^0.1.2",
     "lodash": "^4.17.4",
     "nightmare": "^2.10.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^18.3.0",
+    "electron": "~1.6.2"
   }
 }

@@ -21,7 +21,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
-  fs.ensureDir(`${app.getPath('appData')}/scrabber`).catch(console.error)
+  fs.ensureDir(`${app.getPath('documents')}/scrabber`).catch(console.error)
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

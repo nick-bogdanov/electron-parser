@@ -2,18 +2,33 @@ let Nightmare = require('nightmare')
 let fs = require('fs-extra')
 let json2xls = require('json2xls')
 let _ = require('lodash')
-let electron = require('electron')
-let dialog = electron.dialog
-const BrowserWindow = electron.BrowserWindow;
+let { electron, dialog, BrowserWindow, app } = require('electron')
+let log = require('electron-log')
 
+let filesDir = `${app.getPath('documents')}/scrabber/`
+
+log.transports.file.level = 'info';
+log.transports.file.format = '{h}:{i}:{s}:{ms} {text}';
+
+// Set approximate maximum log size in bytes. When it exceeds, 
+// the archived log will be saved as the log.old.log file 
+log.transports.file.maxSize = 5 * 1024 * 1024
+
+// Write to this file, must be set before first logging 
+log.transports.file.file = filesDir + '/log.txt'
+
+// fs.createWriteStream options, must be set before first logging 
+log.transports.file.streamConfig = { flags: 'w' }
+
+// set existed file stream 
+log.transports.file.stream = fs.createWriteStream(filesDir + '/log.txt')
 
 class Parser {
-    constructor(ipc, app, createWindow) {
+    constructor(ipc, createWindow) {
         this.ipc = ipc
-        this.app = app
         this.link = 'https://f.ua/shop/dlya-avtomobilya/'
         this.items = []
-        this.filesDir = `${this.app.getPath('appData')}/scrabber/`;
+        this.filesDir = filesDir;
         this.event = null;
         this.createWindow = createWindow
         this.init()
@@ -23,16 +38,16 @@ class Parser {
         this.ipc.on('start-parse-f-ua', (event, arg) => {
             this.event = event.sender;
             this.returnJsonData().then((data) => {
-                console.log('using locally data', data)
+                log.info('using locally data', data)
                 event.sender.send('f-ua-results', data)
             }).catch(err => {
-                console.log('err: ', err);
+                log.info('err: ', err);
                 if (err.action) {
-                    console.log('Starting parsing');
+                    log.info('Starting parsing');
                     this.goThroughtCateogories().then(() => {
-                        console.log('parsing has been ended')
+                        log.info('parsing has been ended')
                         event.sender.send('f-ua-results', this.items)
-                    }).catch(console.error)
+                    }).catch(log.info)
                 }
             })
 
@@ -40,7 +55,7 @@ class Parser {
 
         this.ipc.on('export-to-excel', (event, arg) => {
             let mainWindow = new BrowserWindow();
-            const file = `${this.app.getPath('documents')}/f_ua.xlsx`
+            const file = `${app.getPath('documents')}/f_ua.xlsx`
 
             const saveFile = content => {
                 var fileName = dialog.showSaveDialog(mainWindow, {
@@ -54,7 +69,7 @@ class Parser {
 
                 fs.writeFileSync(fileName, content, 'binary')
                 mainWindow.close()
-                
+
             };
 
             this.returnJsonData().then((jsonFile) => {
@@ -80,8 +95,8 @@ class Parser {
         const file = this.filesDir + 'f_ua.json'
 
         if (fs.existsSync(file)) {
-            console.log('Using results data json file instead of parsing');
-            return fs.readFile(file, 'utf-8').then(file => JSON.parse(file)).catch(console.error)
+            log.info('Using results data json file instead of parsing');
+            return fs.readFile(file, 'utf-8').then(file => JSON.parse(file)).catch(log.info)
         }
 
         return Promise.reject({
@@ -145,27 +160,27 @@ class Parser {
                         return elementInfo
                     }, url.name)
                     .then((result) => {
-                        console.log('single result', result)
+                        log.info('single result', result)
                         this.event.send('single-product', result)
                         this.items.push(result)
                     }).catch((err) => {
-                        console.log('error while parsing product: ', err);
+                        log.info('error while parsing product: ', err);
                     });
             });
-        }, Promise.resolve([])).then(this.writeResult.bind(this)).catch(console.log)
+        }, Promise.resolve([])).then(this.writeResult.bind(this)).catch(log.info)
     }
 
     writeResult() {
         fs.writeJson(this.filesDir + 'f_ua.json', this.items, err => {
             if (err) throw err
-            console.log('Files has been written to ' + this.filesDir)
+            log.info('Files has been written to ' + this.filesDir)
         })
     }
 
     saveCategoryLinks(data) {
         fs.writeJson(this.filesDir + 'categories.json', data, err => {
             if (err) throw err
-            console.log('Category Files has been written to ' + this.filesDir)
+            log.info('Category Files has been written to ' + this.filesDir)
         })
     }
 
@@ -176,8 +191,8 @@ class Parser {
         })
 
         if (fs.existsSync(file)) {
-            console.log('Using lcoally categories json file instead of parsing');
-            return fs.readFile(file, 'utf-8').then(file => JSON.parse(file)).catch(console.error)
+            log.info('Using lcoally categories json file instead of parsing');
+            return fs.readFile(file, 'utf-8').then(file => JSON.parse(file)).catch(log.info)
         }
 
         return fs.ensureFile(this.filesDir + 'categories.json').then((data) => {
@@ -198,7 +213,7 @@ class Parser {
                     this.saveCategoryLinks(res)
                     return res
                 })
-        }).catch(console.error)
+        }).catch(log.info)
 
     }
 
