@@ -55,7 +55,7 @@ class Parser {
 
                 fs.writeFileSync(fileName, content, 'binary', (err, data) => {
                     if (err) throw err
-                    this.createWindow()
+                    
                 })
             };
 
@@ -63,13 +63,12 @@ class Parser {
                 const jsonData = _.flatten(jsonFile)
 
                 jsonData.forEach((elem) => {
-                    let title = elem.title.name
-                    delete elem.title
-                    elem.title = title
+                    delete elem.priceNumber
                 })
 
                 const xls = json2xls(_.flatten(jsonData))
                 saveFile(xls)
+                this.createWindow()
             })
         })
 
