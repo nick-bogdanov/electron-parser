@@ -53,10 +53,9 @@ class Parser {
                     return;
                 }
 
-                fs.writeFileSync(fileName, content, 'binary', (err, data) => {
-                    if (err) throw err
-                    
-                })
+                fs.writeFileSync(fileName, content, 'binary')
+                mainWindow.close()
+                
             };
 
             this.returnJsonData().then((jsonFile) => {
@@ -68,7 +67,7 @@ class Parser {
 
                 const xls = json2xls(_.flatten(jsonData))
                 saveFile(xls)
-                this.createWindow()
+                // this.createWindow()
             })
         })
 
