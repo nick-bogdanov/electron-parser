@@ -43,7 +43,7 @@ class Parser {
             let mainWindow = new BrowserWindow();
             const file = `${this.app.getPath('documents')}/f_ua.xlsx`
 
-            const saveFile =  content => {
+            const saveFile = content => {
                 var fileName = dialog.showSaveDialog(mainWindow, {
                     title: 'Save to Excel',
                     defaultPath: file
@@ -53,7 +53,10 @@ class Parser {
                     return;
                 }
 
-                fs.writeFileSync(fileName, content);
+                fs.writeFileSync(fileName, content, 'binary', (err, data) => {
+                    if (err) throw err
+                    this.createWindow()
+                })
             };
 
             this.returnJsonData().then((jsonFile) => {
@@ -67,7 +70,6 @@ class Parser {
 
                 const xls = json2xls(_.flatten(jsonData))
                 saveFile(xls)
-                this.createWindow()
             })
         })
 
