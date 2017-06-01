@@ -1,4 +1,4 @@
-let Nightmare = require('nightmare')
+let Nightmare = require('../../nightmare')
 let fs = require('fs-extra')
 let json2xls = require('json2xls')
 let _ = require('lodash')
@@ -105,9 +105,7 @@ class Parser {
     }
 
     getCategoriesData(urls) {
-        let nightmare = Nightmare({
-            electronPath: require('../../electron')
-        })
+        let nightmare = Nightmare()
 
         return urls.reduce((accumulator, url) => {
             return accumulator.then((results) => {
@@ -186,9 +184,7 @@ class Parser {
 
     getCategoriesLinks() {
         const file = this.filesDir + 'categories.json';
-        let nightmare = Nightmare({
-            electronPath: require('../../electron')
-        })
+        let nightmare = Nightmare()
 
         if (fs.existsSync(file)) {
             log.info('Using lcoally categories json file instead of parsing');
