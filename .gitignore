@@ -2,3 +2,4 @@ node_modules
 Scrubber
 dist
 build
+typings
