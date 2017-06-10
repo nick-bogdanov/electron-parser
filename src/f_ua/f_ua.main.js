@@ -7,7 +7,7 @@ const log = require('../../lib/logger')
 
 const filesDir = `${app.getPath('documents')}/scrabber/`
 
-class Parser {
+export class Parser {
     constructor(ipc, createWindow) {
         this.ipc = ipc
         this.link = 'https://f.ua/shop/dlya-avtomobilya/'
@@ -198,5 +198,3 @@ class Parser {
     }
 
 }
-
-module.exports = Parser

@@ -5,9 +5,10 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "allowJs": true
   },
   "files": [
-    "src/bootsrap.renderer.ts"
+    "src/bootstrap.renderer.ts"
   ]
 }

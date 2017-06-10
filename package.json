@@ -8,11 +8,8 @@
     "start": "electron main.js",
     "compile-win": "electron-packager ./ Scrubber --platform=win32 --arch=x64 --out ./Scrubber --overwrite",
     "compile-mac": "electron-packager ./ Scrubber --platform=darwin --arch=x64 --out ./Scrubber --overwrite",
-    "pack": "build --dir",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
-    "dist": "build",
-    "postinstall": "install-app-deps"
+    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached"
   },
   "repository": "https://github.com/nick-bogdanov/electron-parser",
   "keywords": [

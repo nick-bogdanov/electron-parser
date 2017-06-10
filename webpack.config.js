@@ -14,7 +14,7 @@ module.exports = {
       'angular2/router',
       'angular2/http'
     ],
-    'app': './src/'
+    'app': './src/bootstrap.renderer.ts'
   },
 
   output: {
@@ -43,4 +43,4 @@ module.exports = {
     new CommonsChunkPlugin({ name: 'angular2', filename: 'angular2.js', minChunks: Infinity }),
     new CommonsChunkPlugin({ name: 'common',   filename: 'common.js' })
   ]
-};
+}
