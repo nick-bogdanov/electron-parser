@@ -2,7 +2,7 @@
 /// <reference path='./typings/electron.d.ts' />
 
 import * as _ from 'lodash'
-import { Parser } from './f_ua/f_ua.main.js'
+import { F_UA } from './f_ua/f_ua.renderer.ts'
 import { shell } from 'electron'
 
 // angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {

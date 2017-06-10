@@ -2,10 +2,11 @@ const Nightmare = require('../../nightmare')
 const fs = require('fs-extra')
 const json2xls = require('json2xls')
 const _ = require('lodash')
-const { electron, dialog, BrowserWindow, app } = require('electron')
-const log = require('../../lib/logger')
+const { dialog, BrowserWindow, app } = require('electron')
+const Log = require('../lib/logger')
 
 const filesDir = `${app.getPath('documents')}/scrabber/`
+const log = new Log(filesDir)
 
 export class Parser {
     constructor(ipc, createWindow) {
