@@ -1,13 +1,13 @@
 const ipc = require('electron').ipcRenderer
 
 class F_UA {
-    constructor(idOfHTMLElement) {
+    constructor() {
         this.onUpdateData = null
         this.onSingleDataUpdated = null
     }
 
     $releaseTheBeast() {
-        console.log('parsing has been started');
+        console.log('parsing has been started')
 
         ipc.send('start-parse-f-ua', {})
 

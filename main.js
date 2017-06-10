@@ -9,9 +9,9 @@ const url = require('url')
 const ipc = require('electron').ipcMain
 const fs = require('fs-extra')
 
-const F_UA = require('./src/sites/f_ua.parsing');
+const F_UA = require('./src/f_ua.main')
 
-let PARSER_F_UA = new F_UA(ipc, app, createWindow);
+let PARSER_F_UA = new F_UA(ipc, app, createWindow)
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

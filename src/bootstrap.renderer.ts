@@ -15,38 +15,38 @@ angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
     $scope.loading = false
 
     parse_f_ua.onUpdateData = (data, args) => {
-        console.log(_.flatten(args));
-        $scope.renderedData = _.flatten(args);
-        $scope.sites[0].parsed = true;
+        console.log(_.flatten(args))
+        $scope.renderedData = _.flatten(args)
+        $scope.sites[0].parsed = true
         $scope.loading = false
         priceToInt($scope.renderedData)
         $scope.$apply();
     }
 
     parse_f_ua.onSingleDataUpdated = (data, args) => {
-        $scope.streamData.push(args);
+        $scope.streamData.push(args)
         $scope.streamData = _.flatten($scope.streamData)
         priceToInt($scope.streamData)
         $scope.loading = true
-        $scope.$apply();
+        $scope.$apply()
     }
 
     $scope.openLink = (link) => {
-        shell.openExternal(link);
+        shell.openExternal(link)
     }
 
     $scope.parse = function () {
-        $scope.sites[0].parsed = 'loading';
+        $scope.sites[0].parsed = 'loading'
         return parse_f_ua.$releaseTheBeast()
     }
 
     $scope.exportToExcel = function() {
-        parse_f_ua.export();
+        parse_f_ua.export()
     }
 
     function priceToInt(data) {
         angular.forEach(data, element => {
-            element.priceNumber = parseInt(element.priceNumber);
+            element.priceNumber = parseInt(element.priceNumber)
         });
     }
 
