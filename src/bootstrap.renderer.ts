@@ -1,4 +1,7 @@
-import { _ } from 'lodash'
+/// <reference path='../typings/index.d.ts' />
+/// <reference path='./typings/electron.d.ts' />
+
+import * as _ from 'lodash'
 import { Parser } from './f_ua/f_ua.main.js'
 import { shell } from 'electron'
 
