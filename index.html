@@ -5,11 +5,10 @@
   <meta charset="UTF-8">
   <title>Web scrapper</title>
 </head>
+
 <link rel='stylesheet' href='./assets/styles/photon.min.css'></link>
-<link rel='stylesheet' href='./assets/styles/scrab.css'></link>
+<link rel='stylesheet' href='./src/styles/scrab.css'></link>
 <link rel='stylesheet' href='./node_modules/bootstrap/dist/css/bootstrap.min.css'></link>
-<script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
-<script type="text/javascript" src="./node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 
 <body>
 
@@ -110,7 +109,11 @@
 
 <script>
   // You can also require other files to run in this process
-  require('./src/client/bootstrap.js')
+  require('./src/client/bootstrap.renderer.js')
+  require('./node_modules/angular2/bundles/angular2-polyfills.js')
+  require('./build/common.js')
+  require('./build/angular2.js')
+  require('./build/app.js')
 
 </script>
 
