@@ -1,5 +1,7 @@
 # electron-scrubber
 
+
+clone nightmare fork `git clone git@github.com:nick-bogdanov/nightmare.git`
 `npm i` install project deps
 `typings i` install typescript types definitions
 `npm start` to start app

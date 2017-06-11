@@ -1,9 +1,32 @@
 /// <reference path='../typings/index.d.ts' />
 /// <reference path='./typings/electron.d.ts' />
 
+import { bootstrap } from 'angular2/platform/browser';
+import { Component } from 'angular2/core';
+import { NgFor } from 'angular2/common';
 import * as _ from 'lodash'
-import { F_UA } from './f_ua/f_ua.renderer.ts'
+import { F_UA } from './f_ua/f_ua.renderer'
 import { shell } from 'electron'
+
+
+@Component({
+  selector: 'app',
+  templateUrl: './app.partial.html'
+})
+
+export class App {
+
+  constructor() {}
+
+  handleDrop(e) {
+
+  }
+
+}
+
+bootstrap(App)
+
+
 
 // angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
 //     let parse_f_ua = new F_UA('f-ua')

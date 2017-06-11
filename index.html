@@ -15,101 +15,13 @@
   <div class="window" ng-controller="render as vm">
 
     <div class="window-content">
-
-      <header ng-if='renderedData || streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
-
-        <h1 class="title">Товаров: <span ng-bind='renderedData.length || streamData.length'></span></h1>
-
-        <div ng-if='renderedData' class="toolbar-actions">
-          <button ng-click='exportToExcel()' class="btn btn-xs btn-default">
-              <span class="icon icon-home icon-text"></span>
-                Експорт в Excel
-              </button>
-        </div>
-
-      </header>
-
-      <header ng-if='!renderedData && !streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
-
-        <h1 class="title">Выберите сайт для парсинга</h1>
-
-        <div class="toolbar-actions">
-
-        </div>
-
-      </header>
-
-      <div class="pane-group">
-        <div class="content-margin-top pane-sm sidebar">
-          <nav class="nav-group">
-            <h5 class="nav-group-title">Сайты для парсинга</h5>
-            <div ng-repeat='site in sites'>
-
-              <div tooltip-placement="right" uib-tooltip="Загрузка" ng-if='site.parsed === "loading"' class="sk-circle">
-                <div class="sk-circle1 sk-child"></div>
-                <div class="sk-circle2 sk-child"></div>
-                <div class="sk-circle3 sk-child"></div>
-                <div class="sk-circle4 sk-child"></div>
-                <div class="sk-circle5 sk-child"></div>
-                <div class="sk-circle6 sk-child"></div>
-                <div class="sk-circle7 sk-child"></div>
-                <div class="sk-circle8 sk-child"></div>
-                <div class="sk-circle9 sk-child"></div>
-                <div class="sk-circle10 sk-child"></div>
-                <div class="sk-circle11 sk-child"></div>
-                <div class="sk-circle12 sk-child"></div>
-              </div>
-
-              <a ng-click='loading = true;parse(site.name)' class="nav-group-item">
-                <span tooltip-placement="right" uib-tooltip="Данные отпаршены" ng-if='site.parsed === true' class="icon icon-record" style="color:#34c84a"></span>
-                <span ng-bind='site.label'></span>
-              </a>
-
-            </div>
-          </nav>
-        </div>
-        <div class="content-margin-top pane">
-          <table ng-if='renderedData || streamData.length' class="table-striped">
-            <thead>
-              <tr>
-                <th>
-                  Сайт
-                </th>
-                <th>
-                  <a href="#" ng-click="orderByField='category'; reverseSort = !reverseSort">
-                    Категория<span ng-show="orderByField == 'category'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-                  </a>
-                </th>
-                <th>
-                  <a href="#" ng-click="orderByField='priceNumber'; reverseSort = !reverseSort">
-                    Цена<span ng-show="orderByField == 'priceNumber'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-                  </a>
-                </th>
-                <th>
-                  <a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
-                    Название<span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat='data in renderedData || streamData | orderBy:orderByField:reverseSort track by $index'>
-                <td><a>f.ua</a></td>
-                <td ng-bind='data.category'></td>
-                <td ng-bind='data.price || "Цена не найдена"'></td>
-                <td><a href='javascript:void(0)' ng-click='openLink(data.href)' ng-bind='data.name'></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <app></app>
     </div>
   </div>
 </body>
 
 <script>
   // You can also require other files to run in this process
-  require('./src/client/bootstrap.renderer.js')
   require('./node_modules/angular2/bundles/angular2-polyfills.js')
   require('./build/common.js')
   require('./build/angular2.js')

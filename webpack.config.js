@@ -14,7 +14,7 @@ module.exports = {
       'angular2/router',
       'angular2/http'
     ],
-    'app': './src/bootstrap.renderer.ts'
+    'app': './src/app.renderer.ts'
   },
 
   output: {
@@ -26,21 +26,36 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['','.ts','.js','.json', '.css', '.html']
+    extensions: ['', '.ts', '.js', '.json', '.css', '.html']
   },
 
   module: {
-    loaders: [
-      {
+    loaders: [{
         test: /\.ts$/,
         loader: 'ts',
-        exclude: [ /node_modules/ ]
+        exclude: [/node_modules/]
+      },
+      {
+        test: /\.ts$/,
+        loaders: ['ts', 'angular2-template-loader'],
+        exclude: [/\.(spec|e2e)\.ts$/]
+      },
+      {
+        test: /\.(html|css)$/,
+        loader: 'raw-loader'
       }
     ]
   },
 
   plugins: [
-    new CommonsChunkPlugin({ name: 'angular2', filename: 'angular2.js', minChunks: Infinity }),
-    new CommonsChunkPlugin({ name: 'common',   filename: 'common.js' })
+    new CommonsChunkPlugin({
+      name: 'angular2',
+      filename: 'angular2.js',
+      minChunks: Infinity
+    }),
+    new CommonsChunkPlugin({
+      name: 'common',
+      filename: 'common.js'
+    })
   ]
 }
