@@ -5,8 +5,6 @@
 
 // Copied from https://github.com/DefinitelyTyped/DefinitelyTyped/commit/eddede55bd6b42c154eb8e44336d0fa44ca79965
 
-// <reference path="./node.d.ts" />
-
 declare module Electron {
 	/**
 	 * This class is used to represent an image.

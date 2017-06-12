@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
+    "declaration": false,
     "target": "ES5",
-    "module": "commonjs",
+    "module": "es6",
     "removeComments": true,
+    "noEmitOnError": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
     "allowJs": true
   },
-  "files": [
-    "src/app.renderer.ts"
-  ]
+  "exclude": [
+    "node_modules",
+    "typings"
+  ],
+  "include": ["src/app/**/*.ts"]
 }

@@ -1,31 +1,15 @@
-/// <reference path='../typings/index.d.ts' />
-/// <reference path='./typings/electron.d.ts' />
 
-import { bootstrap } from 'angular2/platform/browser';
-import { Component } from 'angular2/core';
-import { NgFor } from 'angular2/common';
-import * as _ from 'lodash'
-import { F_UA } from './f_ua/f_ua.renderer'
-import { shell } from 'electron'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
 
+// import { bootstrap } from 'angular2/platform/browser';
+// import { Component } from 'angular2/core';
+// import { NgFor } from 'angular2/common';
+// import * as _ from 'lodash'
+// import { F_UA } from './f_ua/f_ua.renderer'
+// import { shell } from 'electron'
 
-@Component({
-  selector: 'app',
-  templateUrl: './app.partial.html'
-})
-
-export class App {
-
-  constructor() {}
-
-  handleDrop(e) {
-
-  }
-
-}
-
-bootstrap(App)
-
+platformBrowserDynamic().bootstrapModule(AppModule);
 
 
 // angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {

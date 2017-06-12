@@ -7,14 +7,7 @@ module.exports = {
   debug: true,
 
   entry: {
-    'angular2': [
-      'rxjs',
-      'reflect-metadata',
-      'angular2/core',
-      'angular2/router',
-      'angular2/http'
-    ],
-    'app': './src/app.renderer.ts'
+    'app': './src/app.main.renderer.ts'
   },
 
   output: {
@@ -26,6 +19,7 @@ module.exports = {
   },
 
   resolve: {
+    modulesDirectories: ['node_modules'],
     extensions: ['', '.ts', '.js', '.json', '.css', '.html']
   },
 
