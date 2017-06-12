@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AppComponent } from './app.component';
 
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule
   ],
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    AppComponent
   ],
   bootstrap: [AppComponent]
 })
