@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import {ipcRenderer} from 'electron'
 
 export class F_UA {

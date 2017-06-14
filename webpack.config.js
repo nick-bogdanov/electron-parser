@@ -6,8 +6,8 @@ module.exports = {
     debug: true,
 
     entry: {
-        'app': './src/app.main.renderer',
-        'vendor': './src/app.main.vendor'
+        'app': './src/renderer/app.main',
+        'vendor': './src/renderer/app.vendor'
     },
 
     output: {

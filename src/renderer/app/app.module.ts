@@ -13,7 +13,8 @@ import { AppComponent } from './app.component';
   ],
   declarations: [
     NavigationComponent,
-    AppComponent
+    AppComponent,
+    fUAComponent
   ],
   bootstrap: [AppComponent]
 })
