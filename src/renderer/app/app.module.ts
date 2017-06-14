@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { NavigationComponent } from './navigation/navigation.component';
+import { fUAComponent } from './f_ua/f_ua.component';
+import { AvtoRadosti } from './avtoradosti/avtoradosti.component';
+
 import { AppComponent } from './app.component';
 
 
@@ -14,7 +17,8 @@ import { AppComponent } from './app.component';
   declarations: [
     NavigationComponent,
     AppComponent,
-    fUAComponent
+    fUAComponent,
+    AvtoRadosti
   ],
   bootstrap: [AppComponent]
 })

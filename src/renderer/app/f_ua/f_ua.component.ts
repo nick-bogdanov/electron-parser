@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import {ipcRenderer} from 'electron'
 
-export class F_UA {
+@Component({
+    selector: 'f-ua',
+    templateUrl: './f_ua.partial.html'
+})
+
+export class fUAComponent {
     public onUpdateData:any
     public onSingleDataUpdated:any
 

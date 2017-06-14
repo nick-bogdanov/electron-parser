@@ -10,6 +10,8 @@ module.exports = {
         'vendor': './src/renderer/app.vendor'
     },
 
+    target: 'electron-renderer',
+
     output: {
         path: __dirname + '/build/',
         publicPath: 'build/',
