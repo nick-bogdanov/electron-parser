@@ -1,9 +1,9 @@
 <div class="content-margin-top pane-sm sidebar">
     <nav class="nav-group">
         <h5 class="nav-group-title">Сайты для парсинга</h5>
-        <div ng-repeat='site in sites'>
+        <div *ngFor='let site of sitesToParse'>
 
-            <div tooltip-placement="right" uib-tooltip="Загрузка" ng-if='site.parsed === "loading"' class="sk-circle">
+            <div tooltip-placement="right" uib-tooltip="Загрузка" *ngIf='site.parsed === "loading"' class="sk-circle">
                 <div class="sk-circle1 sk-child"></div>
                 <div class="sk-circle2 sk-child"></div>
                 <div class="sk-circle3 sk-child"></div>
@@ -19,8 +19,8 @@
             </div>
 
             <a ng-click='loading = true;parse(site.name)' class="nav-group-item">
-                <span tooltip-placement="right" uib-tooltip="Данные отпаршены" ng-if='site.parsed === true' class="icon icon-record" style="color:#34c84a"></span>
-                <span ng-bind='site.label'></span>
+                <span tooltip-placement="right" uib-tooltip="Данные отпаршены" *ngIf='site.parsed === true' class="icon icon-record" style="color:#34c84a"></span>
+                <span>{{site.label}}</span>
             </a>
 
         </div>
