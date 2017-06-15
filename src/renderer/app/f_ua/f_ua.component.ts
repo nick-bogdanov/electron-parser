@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {ipcRenderer} from 'electron'
+import { ipcRenderer, shell } from 'electron';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'f-ua',
@@ -7,24 +8,33 @@ import {ipcRenderer} from 'electron'
 })
 
 export class fUAComponent {
-    public onUpdateData:any
-    public onSingleDataUpdated:any
+    public renderedData: any;
 
     constructor() {
-        this.onUpdateData = null
-        this.onSingleDataUpdated = null
     }
 
-    $releaseTheBeast() {
-        console.log('parsing has been started')
-
+    ngOnInit() {
+        console.log('inited')
         ipcRenderer.send('start-parse-f-ua', {})
-
         ipcRenderer.on('f-ua-results', this.onUpdateData)
         ipcRenderer.on('single-product', this.onSingleDataUpdated)
     }
 
+    onUpdateData(args) {
+        this.renderedData = _.flatten(args)
+    }
+
+    onSingleDataUpdated() { }
+
+    ngOnDestroy() {
+        console.log('destroy')
+    }
+
+    openLink(link) {
+        shell.openExternal(link)
+    }
+
     export() {
-         ipcRenderer.send('export-to-excel', {})
+        ipcRenderer.send('export-to-excel', {})
     }
 }

@@ -11,7 +11,7 @@
 
 </header>
 
-<header ng-if='!renderedData && !streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
+<header *ngIf='!currentSite' class="site-header navbar-fixed-top toolbar toolbar-header">
 
     <h1 class="title">Выберите сайт для парсинга</h1>
 
@@ -24,7 +24,7 @@
 <div class="pane-group">
     <navigation (currentSite)='setCurrentSite($event)'></navigation>
     <div class="content-margin-top pane">
-        <f-ua *ngIf='currentSite === "fUa" || !currentSite'></f-ua>
+        <f-ua *ngIf='currentSite === "fUa"'></f-ua>
         <avto-radosti *ngIf='currentSite === "avtoRadosti"'></avto-radosti>
     </div>
 </div>
