@@ -7,6 +7,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { fUAComponent } from './f_ua/f_ua.component';
 import { AvtoRadosti } from './avtoradosti/avtoradosti.component';
 
+import { MaterialModule } from './app.material.module';
 import { AppComponent } from './app.component';
 
 
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   declarations: [
     NavigationComponent,

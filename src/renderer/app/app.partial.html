@@ -4,9 +4,9 @@
 
     <div ng-if='renderedData' class="toolbar-actions">
         <button ng-click='exportToExcel()' class="btn btn-xs btn-default">
-              <span class="icon icon-home icon-text"></span>
-                Експорт в Excel
-              </button>
+            <span class="icon icon-home icon-text"></span>
+            Експорт в Excel
+        </button>
     </div>
 
 </header>
@@ -22,9 +22,9 @@
 </header>
 
 <div class="pane-group">
-    <navigation></navigation>
+    <navigation (currentSite)='setCurrentSite($event)'></navigation>
     <div class="content-margin-top pane">
-        <f-ua></f-ua>
-        <avto-radosti></avto-radosti>
+        <f-ua *ngIf='currentSite === "fUa" || !currentSite'></f-ua>
+        <avto-radosti *ngIf='currentSite === "avtoRadosti"'></avto-radosti>
     </div>
 </div>

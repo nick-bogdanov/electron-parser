@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-    constructor() {}
+    public currentSite: string;
+    constructor() { }
+
+    setCurrentSite(name: string): void {
+        this.currentSite = name;
+    }
 }
