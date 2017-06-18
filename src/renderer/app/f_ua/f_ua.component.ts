@@ -1,7 +1,6 @@
 
-
 import { SiteCommon } from './../site/site.class';
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core'
 import { ipcRenderer } from 'electron'
 import { IFUa } from './f_ua.interface'
 import * as _ from 'lodash'
@@ -11,21 +10,23 @@ import * as _ from 'lodash'
     templateUrl: './f_ua.partial.html'
 })
 
+
 export class fUAComponent extends SiteCommon {
     @Input('loadedData') loadedData: IFUa[]
     @Output() componentData = new EventEmitter<IFUa[]>()
     public zone: any
     public renderedData: IFUa[]
 
-    constructor() {
+    constructor(private ngZone: NgZone) {
         super()
     }
 
     onUpdateData(data, args) {
-    //    this.zone.runOutsideAngular(() => {
-    //         this.renderedData = _.flatten(args)
-    //         console.log(this.renderedData)
-    //     });
+        console.log(this);
+       this.ngZone.run(() => {
+            this.renderedData = _.flatten(args)
+            console.log(this.renderedData)
+        });
     }
 
     onSingleDataUpdated(event, args) {
@@ -49,8 +50,8 @@ export class fUAComponent extends SiteCommon {
 
         ipcRenderer.send('start-parse-f-ua', {})
 
-        ipcRenderer.on('f-ua-results', this.onUpdateData)
-        ipcRenderer.on('single-product', this.onSingleDataUpdated)
+        ipcRenderer.on('f-ua-results', this.onUpdateData.bind(this))
+        ipcRenderer.on('single-product', this.onSingleDataUpdated.bind(this))
     }
 
     export() {
