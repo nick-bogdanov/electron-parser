@@ -24,7 +24,7 @@
 <div class="pane-group">
     <navigation (currentSite)='setCurrentSite($event)'></navigation>
     <div class="content-margin-top pane">
-        <f-ua *ngIf='currentSite === "fUa" || !currentSite'></f-ua>
-        <avto-radosti *ngIf='currentSite === "avtoRadosti"'></avto-radosti>
+        <f-ua *ngIf='currentSite === "fUa"' [loadedData]='site.fUa' (componentData)='setDataToComponentModel($event)'></f-ua>
+        <avto-radosti *ngIf='currentSite === "avtoRadosti"' data='site.avtoRadosti'></avto-radosti>
     </div>
 </div>

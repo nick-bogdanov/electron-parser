@@ -15,14 +15,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 // angular.module('app', ['ui.bootstrap']).controller('render', ($scope) => {
 //     let parse_f_ua = new F_UA('f-ua')
 
-//     $scope.sites = [{
-//         name: 'f-ua',
-//         label: 'f.ua категория для авто',
-//         parsed: false
-//     }];
-
-//     $scope.streamData = []
-//     $scope.loading = false
 
 //     parse_f_ua.onUpdateData = (data, args) => {
 //         console.log(_.flatten(args))
@@ -41,24 +33,10 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 //         $scope.$apply()
 //     }
 
-//     $scope.openLink = (link) => {
-//         shell.openExternal(link)
-//     }
-
-//     $scope.parse = function () {
-//         $scope.sites[0].parsed = 'loading'
-//         return parse_f_ua.$releaseTheBeast()
-//     }
-
 //     $scope.exportToExcel = function() {
 //         parse_f_ua.export()
 //     }
 
-//     function priceToInt(data) {
-//         angular.forEach(data, element => {
-//             element.priceNumber = parseInt(element.priceNumber)
-//         });
-//     }
 
 // });
 

@@ -24,6 +24,10 @@ class Log {
         // set existed file stream 
         log.transports.file.stream = fs.createWriteStream(this.filesDir + '/log.txt')
     }
+
+    info(message) {
+        log.info(message)
+    }
 }
 
 module.exports = Log
