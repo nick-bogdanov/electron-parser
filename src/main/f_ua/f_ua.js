@@ -52,18 +52,39 @@ class Parser {
                     return
                 }
 
-                fs.writeFileSync(fileName, content, 'binary')
+                this.returnJsonData().then((jsonFile) => {
+                    const jsonData = _.flatten(jsonFile)
+                    let xls = null
+
+
+                    jsonData.forEach((elem) => {
+                        delete elem.priceNumber
+                    })
+
+                    jsonData.forEach((elem, index) => {
+                        if (elem === true) {
+                            console.log(index)
+                            console.log(elem)
+                            jsonData.splice(index, 1)
+                        }
+                    })
+
+                    try {
+                        xls = json2xls(jsonData)
+                    } catch (e) {
+                        console.log('e: ', e)
+                    }
+
+                    fs.writeFileSync(fileName, xls, 'binary')
+
+                })
+
                 mainWindow.close()
 
             }
 
-            this.returnJsonData().then((jsonFile) => {
-                const jsonData = _.flatten(jsonFile)
-                const xls = json2xls(jsonData)
-                
-                console.log(xls)
-                saveFile(xls)
-            })
+            return saveFile()
+
         })
 
     }
@@ -139,9 +160,11 @@ class Parser {
                         return elementInfo
                     }, url.name)
                     .then((result) => {
-                        log.info('single result', result)
-                        this.event.send('single-product', result)
-                        this.items.push(result)
+                        if (typeof result === 'object') {
+                            log.info('single result', result)
+                            this.event.send('single-product', result)
+                            this.items.push(result)
+                        }
                     }).catch((err) => {
                         log.info('error while parsing product: ', err)
                     })
