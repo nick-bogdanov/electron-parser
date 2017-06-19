@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ISites } from './site/sites.interface';
 
 @Component({
     selector: 'app',
@@ -7,9 +8,18 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
     public currentSite: string;
-    constructor() { }
+    public site: ISites = {};
+
+    constructor() {
+        
+     }
 
     setCurrentSite(name: string): void {
         this.currentSite = name;
     }
+
+    setDataToComponentModel() {
+
+    }
+
 }

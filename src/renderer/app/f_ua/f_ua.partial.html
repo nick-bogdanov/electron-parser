@@ -1,4 +1,4 @@
-<table *ngIf='renderedData' class="table-striped">
+<table class="table-striped">
     <thead>
         <tr>
             <th>
@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor='let data of renderedData || streamData'>
+        <tr *ngFor='let data of renderedData'>
             <td><a>f.ua</a></td>
             <td>{{data.category}}</td>
             <td>{{data.price}}</td>

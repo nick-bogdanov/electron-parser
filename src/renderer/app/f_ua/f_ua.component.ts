@@ -1,37 +1,51 @@
-import { Component } from '@angular/core';
-import { ipcRenderer, shell } from 'electron';
-import * as _ from 'lodash';
+import { SiteCommon } from './../site/site.class';
+import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core'
+import { ipcRenderer } from 'electron'
+import { IFUa } from './f_ua.interface'
+import * as _ from 'lodash'
 
 @Component({
     selector: 'f-ua',
     templateUrl: './f_ua.partial.html'
 })
 
-export class fUAComponent {
-    public renderedData: any;
+export class fUAComponent extends SiteCommon {
+    @Input('loadedData') loadedData: IFUa[]
+    @Output() componentData = new EventEmitter<IFUa[]>()
+    public zone: any
+    public renderedData: IFUa[]
 
-    constructor() {
+    constructor(private ngZone: NgZone) {
+        super()
     }
 
-    ngOnInit() {
-        console.log('inited')
-        ipcRenderer.send('start-parse-f-ua', {})
-        ipcRenderer.on('f-ua-results', this.onUpdateData)
-        ipcRenderer.on('single-product', this.onSingleDataUpdated)
-    }
-
-    onUpdateData(args) {
+    onUpdateData(data, args) {
         this.renderedData = _.flatten(args)
     }
 
-    onSingleDataUpdated() { }
+    onSingleDataUpdated(event, args) {
+        this.renderedData.push(args)
+        this.renderedData = _.flatten(this.renderedData)
+    }
+
+    ngOnInit() {
+        console.log(this);
+
+        if (!this.loadedData) {
+            this.$releaseTheBeast()
+        } else {
+            this.renderedData = this.loadedData
+        }
+
+    }
+
+    $releaseTheBeast() {
+        ipcRenderer.on('f-ua-results', this.onUpdateData.bind(this))
+        ipcRenderer.on('single-product', this.onSingleDataUpdated.bind(this))
+    }
 
     ngOnDestroy() {
         console.log('destroy')
-    }
-
-    openLink(link) {
-        shell.openExternal(link)
     }
 
     export() {
