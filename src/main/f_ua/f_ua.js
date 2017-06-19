@@ -59,14 +59,10 @@ class Parser {
 
             this.returnJsonData().then((jsonFile) => {
                 const jsonData = _.flatten(jsonFile)
-
-                jsonData.forEach((elem) => {
-                    delete elem.priceNumber
-                })
-
-                const xls = json2xls(_.flatten(jsonData))
+                const xls = json2xls(jsonData)
+                
+                console.log(xls)
                 saveFile(xls)
-                // this.createWindow()
             })
         })
 

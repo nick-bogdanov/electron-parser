@@ -1,11 +1,11 @@
 <header ng-if='renderedData || streamData.length' class="site-header navbar-fixed-top toolbar toolbar-header">
 
-    <h1 class="title">Товаров: <span ng-bind='renderedData.length || streamData.length'></span></h1>
+    <h1 *ngIf='currentSite && siteOptions[currentSite.name]' class="title">{{currentSite.label}} - Товаров: <span>{{siteOptions[currentSite.name].data.length}}</span></h1>
 
-    <div ng-if='renderedData' class="toolbar-actions">
-        <button ng-click='exportToExcel()' class="btn btn-xs btn-default">
+    <div *ngIf='currentSite && siteOptions[currentSite.name] && siteOptions[currentSite.name].data.length' class="toolbar-actions">
+        <button (click)='exportToExcel(currentSite.name)' class="btn btn-xs btn-default">
             <span class="icon icon-home icon-text"></span>
-            Експорт в Excel
+            Експортировать {{currentSite.label}}
         </button>
     </div>
 
@@ -22,9 +22,11 @@
 </header>
 
 <div class="pane-group">
-    <navigation (currentSite)='setCurrentSite($event)'></navigation>
+    <navigation (currentSite)='setCurrentSite($event)' [siteOptions]='siteOptions'></navigation>
     <div class="content-margin-top pane">
-        <f-ua *ngIf='currentSite === "fUa"' [loadedData]='site.fUa' (componentData)='setDataToComponentModel($event)'></f-ua>
-        <avto-radosti *ngIf='currentSite === "avtoRadosti"' data='site.avtoRadosti'></avto-radosti>
+        <div *ngIf='currentSite'>
+            <f-ua *ngIf='currentSite.name === "fUa"' [loadedData]='site.fUa' (componentData)='setDataToComponentModel($event)'></f-ua>
+            <avto-radosti *ngIf='currentSite.name === "avtoRadosti"' data='site.avtoRadosti'></avto-radosti>
+        </div>
     </div>
 </div>

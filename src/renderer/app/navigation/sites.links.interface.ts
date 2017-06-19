@@ -1,5 +1,5 @@
 export interface ISitesLinks {
-    parsed: boolean;
+    parsed: boolean | string;
     label: string;
     name: string;
 }

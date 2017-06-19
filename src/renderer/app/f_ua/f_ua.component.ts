@@ -1,4 +1,5 @@
-import { SiteCommon } from './../site/site.class';
+import { SiteCommon } from './../site/site.class'
+import { ISiteOptions } from './../site/sites.interface'
 import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core'
 import { ipcRenderer } from 'electron'
 import { IFUa } from './f_ua.interface'
@@ -11,25 +12,31 @@ import * as _ from 'lodash'
 
 export class fUAComponent extends SiteCommon {
     @Input('loadedData') loadedData: IFUa[]
-    @Output() componentData = new EventEmitter<IFUa[]>()
-    public zone: any
-    public renderedData: IFUa[]
+    @Output() componentData = new EventEmitter<ISiteOptions>()
+    public renderedData: IFUa[] = []
 
     constructor(private ngZone: NgZone) {
         super()
     }
 
     onUpdateData(data, args) {
-        this.renderedData = _.flatten(args)
+        console.log('data');
+        this.ngZone.run(() => {
+            this.renderedData = _.flatten(args)
+            this.updateSiteSetting(true)
+        })
     }
 
     onSingleDataUpdated(event, args) {
-        this.renderedData.push(args)
-        this.renderedData = _.flatten(this.renderedData)
+        console.log('chunk');
+        this.ngZone.run(() => {
+            this.renderedData.push(args)
+            this.renderedData = _.flatten(this.renderedData)
+            this.updateSiteSetting(false)
+        })
     }
 
     ngOnInit() {
-        console.log(this);
 
         if (!this.loadedData) {
             this.$releaseTheBeast()
@@ -40,6 +47,8 @@ export class fUAComponent extends SiteCommon {
     }
 
     $releaseTheBeast() {
+        ipcRenderer.send('start-parse-f-ua', {})
+
         ipcRenderer.on('f-ua-results', this.onUpdateData.bind(this))
         ipcRenderer.on('single-product', this.onSingleDataUpdated.bind(this))
     }
@@ -48,7 +57,11 @@ export class fUAComponent extends SiteCommon {
         console.log('destroy')
     }
 
-    export() {
-        ipcRenderer.send('export-to-excel', {})
+    updateSiteSetting(parsed: boolean) {
+        this.componentData.emit({
+            site: 'fUa',
+            data: this.renderedData,
+            parsed
+        })
     }
 }

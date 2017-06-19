@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { ISites } from './site/sites.interface';
+import { Component } from '@angular/core'
+import { ISites, ISiteOptions } from './site/sites.interface'
+import { ISitesLinks } from './navigation/sites.links.interface'
+import { ipcRenderer } from 'electron'
 
 @Component({
     selector: 'app',
@@ -7,19 +9,25 @@ import { ISites } from './site/sites.interface';
 })
 
 export class AppComponent {
-    public currentSite: string;
+    public currentSite: ISitesLinks;
     public site: ISites = {};
+    public siteOptions: ISites = {};
 
     constructor() {
-        
-     }
 
-    setCurrentSite(name: string): void {
-        this.currentSite = name;
     }
 
-    setDataToComponentModel() {
+    setCurrentSite(site: ISitesLinks): void {
+        this.currentSite = site;
+    }
 
+    setDataToComponentModel(options: ISiteOptions): void {
+        console.log('options: ', options);
+        this.siteOptions[options.site] = options
+    }
+
+    exportToExcel() {
+        ipcRenderer.send('export-to-excel', {})
     }
 
 }
